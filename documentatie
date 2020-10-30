@@ -1,0 +1,40 @@
+						Retele de calculatoare
+							Proiect
+ 
+ 
+ 
+						Paraschiv Florin-Vladut
+						Prelipcean Dragos-Iulian
+ 
+ 
+ 
+ 
+ 
+Denumire aplicatie:
+          Aplicatie pentru transfer de fisiere – implementare printr-un mecanism de control al congestiei(similar TCP)
+ 
+Introducere:
+          TCP incearca sa ofere o transmisie de date fiabile intre doua entitati. Aceasta implica si gestionarea pierderilor de pachete, care apar din cauza erorilor sau congestiei de trafic.
+ 
+          Congestia se intampla in TCP cand mai multe calculatoare, conectate la un singur link, pun mai multe pechete de retea decat le poate suporta link-ul. Deoarece TCP are o garantie de transmitere de 100%, daca un expeditor detecteaza pachete pierdute, acesta le va retrimite, acest lucru va inrautati problema congestiei. 
+ 
+          TCP Tahoe este una dintre primele versiuni de control al congestiei implementate. O schita aproximativa a implementarii sale are doua faze : pornirea lenta si evitarea congestiei.
+          In faza pornirii lente, congestion window (cwnd), incepe cu 1 si este incrementat de fiecare data cand un pachet este trimis. Odata ce cwnd atinge un prag configurabil, numit "prag de pornire lenta", expeditorul se duce in starea de "evitare congestie", si cwnd creste cu 1 de fiecare daca cand este confirmata o intreaga fereastra de pachete. Acest lucru inseamna ca cwnd creste rapid in timpul pornirii lente si mai incet in timpul fazei de evitare a congestiei. Daca un pachet este pierdut, TCP Tahoe efectueaza un protocol numit "retransmitere rapida". In modul "retransmitere rapida", pachetul pierdut ese retransmit, cwnd este setat la 1, iar pragul de pornire lenta este actualizat la jumatate din cwnd-ul curent. Rolul pornirii lente este de a umple cat mai repede canalul de transmisie.
+ 
+          Cativa parametrii pe care ii vom folosi:
+•	Sender maximum segment size (smss): reprezinta dimensiunea maxima de date care pot fi trimise intr-un singur segment de TCP, fara sa includa headerul
+•	sender’s window (swnd): reprezinta maximul de octeti care pot fi trimisi. Valoarea este cea mai mica dintre receiver's window (rwnd) si congestion window
+•	receiver’s window (rwnd): este cea mai recenta fereastra promovata de receptor
+•	congestion window (cwnd):  este un factor care stabileste numarul de bytes care pot fi transmisi
+•	loss window (lw): este valoarea congestion window dupa ce o pierdere de pachete a fost detectata.
+•	slow-start threshold (ssthresh): este o variabila de stare care determina modul de prelucrare al pachetelor: pornire lenta sau congestie
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
