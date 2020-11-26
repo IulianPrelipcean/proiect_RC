@@ -1,1 +1,0 @@
-https://medium.com/@NickKaramoff/tcp-packets-from-scratch-in-python-3a63f0cd59fe
