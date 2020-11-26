@@ -26,8 +26,3 @@ class Receiver:
 		self.s.close()
 
 
-rev = Receiver()
-rev.connect()
-rev.startReceive()
-rev.closeReceiver()
-

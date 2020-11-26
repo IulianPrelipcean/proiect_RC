@@ -19,7 +19,3 @@ class Sender:
 		self.s.sendto(message.encode('utf-8'), (Sender.HOST, Sender.PORT))
 
 
-
-send = Sender()
-send.connect()
-send.startSend("haiaiai")
