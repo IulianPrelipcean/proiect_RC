@@ -1,14 +1,14 @@
 from tkinter import *
-# from sender import *
-# from receiver import *
+from sender import *
+from receiver import *
+
+sender = Sender()
+receiver = Receiver()
 
 def onStart():
 	print("onStart")
-	# sender = Sender()
-	# receiver = Receiver()
-
-	# receiver.connect()
-	# sender.connect()
+	receiver.connect()
+	sender.connect()
 
 	# receiver.startReceive()
 	# sender.startSend("poate merge")
@@ -16,6 +16,8 @@ def onStart():
 
 def onStop():
 	print("stop")
+	sender.close_connection()
+	receiver.close_connection()
 
 def onCongestion():
 	print("cong")
@@ -32,7 +34,7 @@ class UIObjects:
 		# initializeaza fereastra
 		self.root = Tk()
 
-		# creaza obiecte
+		# creeaza obiecte
 		self.startButton = Button(self.root, text="Start connection", command=onStart, padx=50, pady=50, fg="blue", bg="red")
 		self.stopButton = Button(self.root, text="Stop connection", command=onStop, padx=50, pady=50, fg="blue", bg="red")
 		self.congestionButton = Button(self.root, text="Congestie", command=onCongestion, padx=50, pady=10, fg="blue", bg="red")

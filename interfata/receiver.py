@@ -1,28 +1,58 @@
 #!/usr/bin/env python3
 
 import socket
-import sys
-
+import threading
+import select
+import time
+   
+ 
 class Receiver:
-	HOST = '127.0.0.1'		# localhost
-	PORT = 65432			# port (non--privileged port are > 1023 ) 0-65536
+    HOST = '127.0.0.7'      
+    PORT = 65432            
+    
+    
+    def __init__(self):
+        #create a new UDP socket
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        self.s.bind((Receiver.HOST, Receiver.PORT))
+        
+    def connect(self):
+        self.receive_thread = threading.Thread(target=self.receive_function)
+        self.send_thread = threading.Thread(target=self.send_function)
+        self.running = True
+        self.receive_thread.start()
+        self.send_thread.start()
 
-	def __init__(self):
-		pass
+    def close_connection(self):
+        self.running = False
+        self.receive_thread.join()
+        self.send_thread.join()
 
-	def connect(self):
-		#create a new socket
-		self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		
+    def receive_function(self):
+        contor = 0
+        while self.running:
+            r, _, _ = select.select([self.s], [], [], 1)
+            time.sleep(1)
+            if not r:
+                contor = contor + 1
+                print("receive")
+            else:
+                data, address = self.s.recvfrom(1024)
+                print("S-a receptionat in receiver class ", str(data), " de la ", address)
+                print("Contor= ", contor)
 
-	def startReceive(self):
-		while True:
-			data, addr = self.s.recvfrom(1024)
-			print("Message received from: ", addr)
-			print("Message received: ", data.decode('utf-8'), "\n")
-			break;
-			
-	def closeReceiver(self):
-		self.s.close()
+    def send_function(self):
+        while self.running:
+            try:
+                message = "data from receiver class"
+                #self.s.sendto(message.encode('utf-8'), (Sender.HOST, Sender.PORT))
+                self.s.sendto(bytes(message.encode('utf-8')), (Receiver.HOST, Receiver.PORT))
+            except KeyboardInterrupt:
+                self.running = False
+                print("stoped from receiver")
+
+    
 
 
+# receive = Receiver()
+# receive.connect()
