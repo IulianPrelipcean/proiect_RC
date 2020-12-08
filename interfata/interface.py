@@ -10,10 +10,6 @@ def onStart():
 	receiver.connect()
 	sender.connect()
 
-	# receiver.startReceive()
-	# sender.startSend("poate merge")
-
-
 def onStop():
 	print("stop")
 	sender.close_connection()

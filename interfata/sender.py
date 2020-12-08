@@ -8,13 +8,17 @@ import time
  
 class Sender:
     HOST = '127.0.0.6'      
-    PORT = 65432            
+    PORT_s = 65432            
+    PORT_r = 65431            
     
+    
+
     
     def __init__(self):
         #create a new UDP socket
+        addr_receiver=(Sender.HOST, Sender.PORT_r)
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        self.s.bind((Sender.HOST, Sender.PORT))
+        self.s.bind((Sender.HOST, Sender.PORT_s))
         
 
     def connect(self):
@@ -37,7 +41,7 @@ class Sender:
             time.sleep(1)
             if not r:
                 contor = contor + 1
-                print("receive")
+                print("receive in Sender")
             else:
                 data, address = self.s.recvfrom(1024)
                 print("S-a receptionat in sender class ", str(data), " de la ", address)
@@ -48,7 +52,8 @@ class Sender:
             try:
                 message = "data from sender class"
                 #self.s.sendto(message.encode('utf-8'), (Sender.HOST, Sender.PORT))
-                self.s.sendto(bytes(message.encode('utf-8')), (Sender.HOST, Sender.PORT))
+                #self.s.sendto(bytes(message.encode('utf-8')), self.addr_receiver)
+                self.s.sendto(bytes(message.encode('utf-8')), (Sender.HOST, Sender.PORT_r))
             except KeyboardInterrupt:
                 self.running = False
                 print("stoped from sender")
