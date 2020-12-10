@@ -7,7 +7,7 @@ import time
    
  
 class Sender:
-    HOST = '127.0.0.6'      
+    HOST = '127.0.0.3'      
     PORT_s = 65432            
     PORT_r = 65431            
     

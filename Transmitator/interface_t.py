@@ -1,19 +1,16 @@
 from tkinter import *
-from sender import *
-from receiver import *
+from transmitator import *
+#from receiver import *
 
 sender = Sender()
-receiver = Receiver()
 
 def onStart():
 	print("onStart")
-	receiver.connect()
 	sender.connect()
 
 def onStop():
 	print("stop")
 	sender.close_connection()
-	receiver.close_connection()
 
 def onCongestion():
 	print("cong")
