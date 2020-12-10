@@ -4,7 +4,11 @@ import socket
 import threading
 import select
 import time
-   
+import struct
+import sys
+from pachet_t import *
+
+
  
 class Sender:
     HOST = '127.0.0.3'      
@@ -22,6 +26,8 @@ class Sender:
         
 
     def connect(self):
+        self.pachet = Pachet_Trimis(Sender.PORT_r)   # de vazut
+
         self.receive_thread = threading.Thread(target=self.receive_function)
         self.send_thread = threading.Thread(target=self.send_function)
         self.running = True
@@ -41,22 +47,31 @@ class Sender:
             time.sleep(1)
             if not r:
                 contor = contor + 1
-                print("receive in Sender")
+                print("receive nothing in Sender")
             else:
                 data, address = self.s.recvfrom(1024)
-                print("S-a receptionat in sender class ", str(data), " de la ", address)
-                print("Contor= ", contor)
+                # print("S-a receptionat in sender class ", str(data), " de la ", address)
+                # print("Contor= ", contor)
+                print("Mesaj de confirmare ", str(data))
+
+
+    def setMessage(self):
+        self.message = self.pachet.returnare_pachet()
+        return self.message
+
+
 
     def send_function(self):
         while self.running:
             try:
-                message = "data from sender class"
+
+                message = self.setMessage()
                 #self.s.sendto(message.encode('utf-8'), (Sender.HOST, Sender.PORT))
                 #self.s.sendto(bytes(message.encode('utf-8')), self.addr_receiver)
                 self.s.sendto(bytes(message.encode('utf-8')), (Sender.HOST, Sender.PORT_r))
             except KeyboardInterrupt:
                 self.running = False
-                print("stoped from sender")
+                print("stopped from sender")
 
     
 

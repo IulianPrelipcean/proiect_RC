@@ -27,10 +27,11 @@ class UIObjects:
 		# initializeaza fereastra
 		self.root = Tk()
 
+		self.root.title("Transmitator")
 		# creeaza obiecte
 		self.startButton = Button(self.root, text="Start connection", command=onStart, padx=50, pady=50, fg="blue", bg="red")
 		self.stopButton = Button(self.root, text="Stop connection", command=onStop, padx=50, pady=50, fg="blue", bg="red")
-		self.congestionButton = Button(self.root, text="Congestie", command=onCongestion, padx=50, pady=10, fg="blue", bg="red")
+		#self.congestionButton = Button(self.root, text="Congestie", command=onCongestion, padx=50, pady=10, fg="blue", bg="red")
 		self.sendButton = Button(self.root, text="Send Data", command=sendData, padx=50, pady=10, fg="blue", bg="red")
 		self.text1 = Label(self.root, text="Mesaj trimis")
 		self.text2 = Label(self.root, text="Mesaj primit")
@@ -45,7 +46,7 @@ class UIObjects:
 		self.messageToSend.grid(row=2, column=0)
 		self.messageToReceive.grid(row=2, column=1)
 		self.sendButton.grid(row=3, column=0)
-		self.congestionButton.grid(row=4, column=0)
+		#self.congestionButton.grid(row=4, column=0)
 
 	def getMessageToSend(self):
 		return self.messageToSend.get()
